@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  gateway-api:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - enclave-aws
+      - enclave-gcp
+      - enclave-azure
+    restart: unless-stopped
+    networks:
+      - backend
+
+  enclave-aws:
+    build:
+      context: .
+      dockerfile: enclave/Dockerfile
+    environment:
+      NODE_NAME: AWS_US_EAST_NITRO
+      NODE_INDEX: 1
+    restart: unless-stopped
+    ports:
+      - "9091:9090"
+    networks:
+      - backend
+
+  enclave-gcp:
+    build:
+      context: .
+      dockerfile: enclave/Dockerfile
+    environment:
+      NODE_NAME: GCP_EU_WEST_CONFIDENTIAL
+      NODE_INDEX: 2
+    restart: unless-stopped
+    ports:
+      - "9092:9090"
+    networks:
+      - backend
+
+  enclave-azure:
+    build:
+      context: .
+      dockerfile: enclave/Dockerfile
+    environment:
+      NODE_NAME: AZURE_SG_ENCLAVE
+      NODE_INDEX: 3
+    restart: unless-stopped
+    ports:
+      - "9093:9090"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
