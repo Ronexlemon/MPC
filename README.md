@@ -102,33 +102,28 @@ docker compose up
 # Api endpoints
 ### Provision Secret
 ```
-curl -X POST http://localhost:8080/v1/vaults \      
-  -H "X-API-Key: b2b_secret_auth_token" \         
+curl -X POST http://localhost:8080/v1/vaults \
+  -H "X-API-Key: b2b_secret_auth_token" \
   -H "Content-Type: application/json" \
   -d '{"workspace_id": "enterprise_corp_alpha"}'
 
 ```
 ### Example Response
 ```
-
+{"public_address":"0x222406a7685419ef3fa791EFFAfd6e0cB7f1CcDC","status":"SUCCESS_VAULT_ISOLATED"}%  
 ```
 
 ### Signing a Transaction
 ```
 curl -X POST http://localhost:8080/v1/transactions \
-  -H "X-API-Key: b2b_secret_auth_token" \         
+  -H "X-API-Key: b2b_secret_auth_token" \
   -H "Content-Type: application/json" \
-  -d '{                                         
-    "workspace_id": "enterprise_corp_alpha",
-    "to_address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-    "amount": "1000000000000000000",
-    "nonce": 12
-  }'
+  -d '{"workspace_id":"enterprise_corp_alpha","to_address":"0x742d35Cc6634C0532925a3b844Bc454e4438f44e","amount":"1000000000000000000","nonce":12}'
 
 ```
 ### Example Response
 ```
-
+{"signature_hex":"0x46caf45ee7527f5fca0d43f7b0b2447e85e499fc294a3c5ac1ee65ebaac265ae","status":"TRANSACTION_SIGNED_BY_CLUSTER"}%  
 ```
 ---
 # Project Structure
